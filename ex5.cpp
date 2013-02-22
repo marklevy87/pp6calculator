@@ -166,9 +166,66 @@ void vectorlength()
 	}
 }	
 
+void invariantmass()
+{
+	double a, b, mtm1, mtm2, invariant, energy1, energy2, dotmtm;
+	double p1[4], p2[4];
+	bool error=0;
+	for(int i=0;i<=1;++i){
+		while(!error){
+			std::cout<<"Please enter the mass of particle "<<i+1<<" in MeV\n";
+			std::cin>>a;
+			if(!std::cin){nonnumerror();}
+			else if(a<0){
+				std::cout<<"Cannot have negative mass!!\n";	
+			}
+			else{error=1;}		
+		}
+		error=0;
+		if(i==0){
+			p1[0]=a;
+			for(int j=0;j<=2;++j){
+				while(!error){
+					std::cout<<"Please enter component "<<j+1<<" of particle "<<i+1<<" in MeV\n";
+					std::cin>>b;
+					if(!std::cin){nonnumerror();}
+					else{
+						error=1;
+						p1[j+1]=b;
+						mtm1=mtm1 + (p1[j+1]*p1[j+1]);
+					}
+				}
+				error=0;
+			}
+			energy1=(p1[0]*p1[0])+mtm1;		
+		}
 
+		if(i==1){
+			p2[0]=a;
+			for(int j=0;j<=2;++j){
+				while(!error){
+					std::cout<<"Please enter component "<<j+1<<" of particle "<<i+1<<" in MeV\n";
+					std::cin>>b;
+					if(!std::cin){nonnumerror();}
+					else{
+						error=1;
+						p2[j+1]=b;
+						mtm2=mtm2 + (p2[j+1]*p2[j+1]);
+					}
+				}
+				error=0;
+			}
+			energy2=(p2[0]*p2[0])+mtm2;		
+		}
 	
-	
+	}
+	for(int ii=1;ii<=3;++ii){
+		dotmtm=dotmtm+(p1[ii]*p2[ii]);
+	}
+	invariant=(p1[0]*p1[0])+(p2[0]*p2[0])+2*((sqrt(energy1)*sqrt(energy2))-dotmtm);
+	std::cout<<"The invariant mass of these particles is "<<invariant<<" MeV";
+}		 	
+		
 int main()
 {
 	double a,b,c;
@@ -192,18 +249,26 @@ int main()
 	}
 	else {error=1;}							//Clearing the error flag
 	}
-
+	error=0;
 
 	if(d==9){							//Breaking loop if user has asked to quit
 	std::cout<<"Goodbye!\n";
 	break;
 	}
 	
-	if(d<=4){							//Asking for input for standard algebraic functions
-		std::cout<<"Please enter first integer number.\n";
+	if(d<=4){				
+		while(!error){			//Asking for input for standard algebraic functions
+		std::cout<<"Please enter first number.\n";
 		std::cin>>a;
+		if(!std::cin){nonnumerror();}
+		else {break;}
+		}
+		while(!error){
 		std::cout<<"And the second...\n";
 		std::cin>>b;
+		if(!std::cin){nonnumerror();}
+		else{break;}
+		}
 	
 		if(d==1){						//This section calls on specific algebraic functions
 			c=addition(a,b);
@@ -228,6 +293,9 @@ int main()
 	}
 	else if(d==7){
 		vectorlength();
+	}
+	else if(d==8){
+		invariantmass();
 	}
 	error=0;
 	}
