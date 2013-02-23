@@ -106,7 +106,7 @@ void quadratic()		//Creating quadratic root finder function
 	} 
 }
 
-void vectorlength()
+void vectorlength()			//Function calculating vector length
 {	
 	double a, vtype;
 	bool error=0;
@@ -166,16 +166,16 @@ void vectorlength()
 	}
 }	
 
-void invariantmass()
+void invariantmass()			//Creating invariant mass function
 {
 	double a, b, mtm1, mtm2, invariant, energy1, energy2, dotmtm;
-	double p1[4], p2[4];
+	double p1[4], p2[4];						//Declaring arrays to store 3 momenta and mass
 	bool error=0;
-	for(int i=0;i<=1;++i){
-		while(!error){
+	for(int i=0;i<=1;++i){						//Taking inputs for both particles-looping over particle 1 and 2
+		while(!error){						//Taking in mass declarations (0th component of arrays)
 			std::cout<<"Please enter the mass of particle "<<i+1<<" in MeV\n";
 			std::cin>>a;
-			if(!std::cin){nonnumerror();}
+			if(!std::cin){nonnumerror();}			//Error proofing
 			else if(a<0){
 				std::cout<<"Cannot have negative mass!!\n";	
 			}
@@ -184,7 +184,7 @@ void invariantmass()
 		error=0;
 		if(i==0){
 			p1[0]=a;
-			for(int j=0;j<=2;++j){
+			for(int j=0;j<=2;++j){		//Looping over iterator to take 1/2/3 component of momentum 
 				while(!error){
 					std::cout<<"Please enter component "<<j+1<<" of particle "<<i+1<<" in MeV\n";
 					std::cin>>b;
@@ -192,12 +192,12 @@ void invariantmass()
 					else{
 						error=1;
 						p1[j+1]=b;
-						mtm1=mtm1 + (p1[j+1]*p1[j+1]);
+						mtm1=mtm1 + (p1[j+1]*p1[j+1]);		//calculating momentum squared in order to calculate energy
 					}
 				}
 				error=0;
 			}
-			energy1=(p1[0]*p1[0])+mtm1;		
+			energy1=(p1[0]*p1[0])+mtm1;		//Calculating energy
 		}
 
 		if(i==1){
@@ -220,10 +220,10 @@ void invariantmass()
 	
 	}
 	for(int ii=1;ii<=3;++ii){
-		dotmtm=dotmtm+(p1[ii]*p2[ii]);
+		dotmtm=dotmtm+(p1[ii]*p2[ii]);  //Calculating the dot product of the 3 momenta of particles 1 and 2
 	}
-	invariant=(p1[0]*p1[0])+(p2[0]*p2[0])+2*((sqrt(energy1)*sqrt(energy2))-dotmtm);
-	std::cout<<"The invariant mass of these particles is "<<invariant<<" MeV";
+	invariant=sqrt((p1[0]*p1[0])+(p2[0]*p2[0])+2*((sqrt(energy1)*sqrt(energy2))-dotmtm)); //Calculating invariant mass
+	std::cout<<"The invariant mass of these particles is "<<invariant<<" MeV\n";
 }		 	
 		
 int main()
@@ -235,7 +235,7 @@ int main()
 
 	while(i==0){							//Generic while loop to allow user to quit program with specific input
 	while (!error){ 						//While loop to check for various input errors 
-	std::cout<<"Which operation would you like to perform on the numbers? Use the following notation\n1 = addition\n2 = subtraction\n3 = multiplication\n4 = division\n5 = Calculate x-axis intercept\n6 = Find the roots of a quadratic equation\n7 = Find the length of a 3 or 4 vector\n8 = Find invariant mass of two particles\nType '9' to quit\n";
+	std::cout<<"Which operation would you like to perform on the numbers? Use the following notation\n1 = addition\n2 = subtraction\n3 = multiplication\n4 = division\n5 = Calculate x-axis intercept of a straight line\n6 = Find the roots of a quadratic equation\n7 = Find the length of a 3 or 4 vector\n8 = Find invariant mass of two particles\nType '9' to quit\n";
 
 	std::cin>>d;
 
@@ -282,9 +282,9 @@ int main()
 		else if (d==4){
 			c=division(a,b);
 		}
-	std::cout<<"And your answer is\n"<<c<<std::endl;
+	std::cout<<"And your answer is\n"<<c<<std::endl;			
 	error=0;
-	}
+	}				//Calling various user requested functions	
 	else if(d==5){
 		xintercept();
 	}
